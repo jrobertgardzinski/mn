@@ -4,6 +4,7 @@ import com.jrobertgardzinski.security.aggregate.AuthorizedUserAggregateRootEntit
 import com.jrobertgardzinski.security.domain.aggregate.AuthorizedUserAggregate;
 import com.jrobertgardzinski.security.domain.entity.AuthorizationData;
 import com.jrobertgardzinski.security.domain.entity.User;
+import com.jrobertgardzinski.security.domain.event.registration.*;
 import com.jrobertgardzinski.security.domain.repository.UserRepository;
 import com.jrobertgardzinski.security.domain.service.SecurityService;
 import com.jrobertgardzinski.security.domain.vo.Email;
@@ -43,7 +44,10 @@ public class SecurityServiceAdapter {
     }
 
     public UserEntity register(User user) {
-        return UserEntity.fromDomain(securityService.register(user));
+        return switch (securityService.register(user)) {
+            case RegistrationPassedEvent e -> UserEntity.fromDomain(e.user());
+            case RegistrationFailureEvent e -> throw e.exceptionSupplier().apply(user);
+        };
     }
 
     public AuthorizedUserAggregateRootEntity authenticate(IpAddress ipAddress, Email email, Password password) {

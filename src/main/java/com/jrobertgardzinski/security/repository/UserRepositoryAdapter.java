@@ -5,6 +5,8 @@ import com.jrobertgardzinski.security.domain.repository.UserRepository;
 import com.jrobertgardzinski.security.domain.vo.Email;
 import com.jrobertgardzinski.security.entity.UserEntity;
 
+import java.util.Optional;
+
 public class UserRepositoryAdapter implements UserRepository {
     private final UserJpaRepository userJpaRepository;
 
@@ -18,8 +20,8 @@ public class UserRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public User findBy(Email email) {
-        return userJpaRepository.findByEmail(email.value()).asDomain();
+    public Optional<User> findBy(Email email) {
+        return Optional.ofNullable(userJpaRepository.findByEmail(email.value()).asDomain());
     }
 
     @Override
