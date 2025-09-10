@@ -23,11 +23,11 @@ public class UserEntity {
     }
 
     public static UserEntity fromDomain(User user) {
-        return new UserEntity(user.emailSupplier().get().value(), user.passwordSupplier().get().value());
+        return new UserEntity(user.email().value(), user.password().value());
     }
 
     public User asDomain() {
-        return new User(() -> new Email(email), () -> new Password(password));
+        return new User(new Email(email), new Password(password));
     }
 
     public String getEmail() {
