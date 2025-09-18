@@ -3,9 +3,9 @@ package com.jrobertgardzinski.security.entity;
 import com.jrobertgardzinski.security.domain.entity.AuthorizationData;
 import com.jrobertgardzinski.security.domain.vo.*;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
 @Serdeable
@@ -15,13 +15,13 @@ public class AuthorizationDataEntity {
     private String email;
     private String refreshToken;
     private String authorizationToken;
-    private Calendar refreshTokenExpiration;
-    private Calendar authorizationTokenExpiration;
+    private LocalDateTime refreshTokenExpiration;
+    private LocalDateTime authorizationTokenExpiration;
 
     public AuthorizationDataEntity() {
     }
 
-    public AuthorizationDataEntity(String email, String refreshToken, String authorizationToken, Calendar refreshTokenExpiration, Calendar authorizationTokenExpiration) {
+    public AuthorizationDataEntity(String email, String refreshToken, String authorizationToken, LocalDateTime refreshTokenExpiration, LocalDateTime authorizationTokenExpiration) {
         this.email = email;
         this.refreshToken = refreshToken;
         this.authorizationToken = authorizationToken;
@@ -73,19 +73,19 @@ public class AuthorizationDataEntity {
         this.authorizationToken = authorizationToken;
     }
 
-    public Calendar getRefreshTokenExpiration() {
+    public LocalDateTime getRefreshTokenExpiration() {
         return refreshTokenExpiration;
     }
 
-    public void setRefreshTokenExpiration(Calendar refreshTokenExpiration) {
+    public void setRefreshTokenExpiration(LocalDateTime refreshTokenExpiration) {
         this.refreshTokenExpiration = refreshTokenExpiration;
     }
 
-    public Calendar getAuthorizationTokenExpiration() {
+    public LocalDateTime getAuthorizationTokenExpiration() {
         return authorizationTokenExpiration;
     }
 
-    public void setAuthorizationTokenExpiration(Calendar authorizationTokenExpiration) {
+    public void setAuthorizationTokenExpiration(LocalDateTime authorizationTokenExpiration) {
         this.authorizationTokenExpiration = authorizationTokenExpiration;
     }
 }

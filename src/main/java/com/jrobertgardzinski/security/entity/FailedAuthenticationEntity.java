@@ -5,12 +5,12 @@ import com.jrobertgardzinski.security.domain.vo.FailedAuthenticationDetails;
 import com.jrobertgardzinski.security.domain.vo.FailedAuthetincationId;
 import com.jrobertgardzinski.security.domain.vo.IpAddress;
 import io.micronaut.serde.annotation.Serdeable;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 @Serdeable
 @Entity
@@ -19,38 +19,20 @@ public class FailedAuthenticationEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String ipAddress;
-    private Calendar time;
+    private LocalDateTime time;
 
     public FailedAuthenticationEntity() {
     }
 
-    public FailedAuthenticationEntity(String ipAddress, Calendar time) {
+    public FailedAuthenticationEntity(String ipAddress, LocalDateTime time) {
         this.ipAddress = ipAddress;
         this.time = time;
     }
 
-    public FailedAuthenticationEntity(long id, String ipAddress, Calendar time) {
+    public FailedAuthenticationEntity(long id, String ipAddress, LocalDateTime time) {
         this.id = id;
         this.ipAddress = ipAddress;
         this.time = time;
-    }
-
-    public static FailedAuthenticationEntity fromDomain(FailedAuthentication failedAuthentication) {
-        return new FailedAuthenticationEntity(
-                failedAuthentication.id().value(),
-                failedAuthentication.details().ipAddress().value(),
-                failedAuthentication.details().time()
-        );
-    }
-
-    public FailedAuthentication asDomain() {
-        return new FailedAuthentication(
-                new FailedAuthenticationDetails(
-                        new IpAddress(ipAddress),
-                        time
-                ),
-                new FailedAuthetincationId(id)
-        );
     }
 
     public long getId() {
@@ -69,11 +51,30 @@ public class FailedAuthenticationEntity {
         this.ipAddress = ipAddress;
     }
 
-    public Calendar getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Calendar time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
+    }
+
+
+    public static FailedAuthenticationEntity fromDomain(FailedAuthentication failedAuthentication) {
+        return new FailedAuthenticationEntity(
+                failedAuthentication.id().value(),
+                failedAuthentication.details().ipAddress().value(),
+                failedAuthentication.details().time()
+        );
+    }
+
+    public FailedAuthentication asDomain() {
+        return new FailedAuthentication(
+                new FailedAuthenticationDetails(
+                        new IpAddress(ipAddress),
+                        time
+                ),
+                new FailedAuthetincationId(id)
+        );
     }
 }

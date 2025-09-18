@@ -7,6 +7,8 @@ import com.jrobertgardzinski.security.domain.vo.FailuresCount;
 import com.jrobertgardzinski.security.domain.vo.IpAddress;
 import com.jrobertgardzinski.security.entity.FailedAuthenticationEntity;
 
+import java.time.LocalDateTime;
+
 public class FailedAuthenticationRepositoryAdapter implements FailedAuthenticationRepository {
     private final FailedAuthenticationJpaRepository repository;
 
