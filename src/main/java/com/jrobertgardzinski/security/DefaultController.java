@@ -25,16 +25,25 @@ public class DefaultController {
 
     @Post(uri="register")
     public UserEntity register(String email, String password) {
-        return service.register(factory.createUser(email, password));
+        return service.register(
+                factory.createUser(
+                        email,
+                        password));
     }
 
     @Post(uri="authenticate")
     public AuthorizedUserAggregateRootEntity authenticate(HttpRequest<?> httpRequest, String email, String password) {
-        return service.authenticate(new IpAddress(addressResolver.resolve(httpRequest)), new Email(email), new Password(password));
+        return service.authenticate(
+                factory.createAuthenticationRequest(
+                        addressResolver.resolve(httpRequest),
+                        email,
+                        password));
     }
 
     @Post(uri="refresh")
     public AuthorizationDataEntity refreshToken(String email, String refreshToken) {
-        return service.refreshToken(new Email(email), new RefreshToken(new Token(refreshToken)));
+        return service.refreshToken(
+                factory.createTokenRefreshRequest(
+                        email, refreshToken));
     }
 }

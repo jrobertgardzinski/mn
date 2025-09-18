@@ -10,5 +10,5 @@ import java.util.Calendar;
 @Repository
 public interface AuthorizationDataJpaRepository extends JpaRepository<AuthorizationDataEntity, String> {
     void deleteByEmail(String value);
-    Calendar findRefreshTokenExpirationByEmailAndRefreshToken(String email, String refreshToken);
+    AuthorizationDataEntity findByEmailAndRefreshToken(String email, String refreshToken);
 }

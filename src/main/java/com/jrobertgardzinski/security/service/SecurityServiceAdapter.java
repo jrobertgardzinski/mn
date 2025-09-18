@@ -7,10 +7,7 @@ import com.jrobertgardzinski.security.domain.entity.User;
 import com.jrobertgardzinski.security.domain.event.registration.*;
 import com.jrobertgardzinski.security.domain.repository.UserRepository;
 import com.jrobertgardzinski.security.domain.service.SecurityService;
-import com.jrobertgardzinski.security.domain.vo.Email;
-import com.jrobertgardzinski.security.domain.vo.IpAddress;
-import com.jrobertgardzinski.security.domain.vo.Password;
-import com.jrobertgardzinski.security.domain.vo.RefreshToken;
+import com.jrobertgardzinski.security.domain.vo.*;
 import com.jrobertgardzinski.security.entity.AuthorizationDataEntity;
 import com.jrobertgardzinski.security.entity.UserEntity;
 import com.jrobertgardzinski.security.repository.*;
@@ -50,11 +47,11 @@ public class SecurityServiceAdapter {
         };
     }
 
-    public AuthorizedUserAggregateRootEntity authenticate(IpAddress ipAddress, Email email, Password password) {
-        return AuthorizedUserAggregateRootEntity.from(securityService.authenticate(ipAddress, email, password));
+    public AuthorizedUserAggregateRootEntity authenticate(AuthenticationRequest authenticationRequest) {
+        return AuthorizedUserAggregateRootEntity.from(securityService.authenticate(authenticationRequest));
     }
 
-    public AuthorizationDataEntity refreshToken(Email email, RefreshToken refreshToken) {
-        return AuthorizationDataEntity.fromDomain(securityService.refreshToken(email, refreshToken));
+    public AuthorizationDataEntity refreshToken(TokenRefreshRequest tokenRefreshRequest) {
+        return AuthorizationDataEntity.fromDomain(securityService.refreshToken(tokenRefreshRequest));
     }
 }
